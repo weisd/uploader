@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script src="jquery-1.10.0.min.js"></script>
+	<script src="uploader.js"></script>
+</head>
+<body>
+<div id="btn">up</div>
+<div id="preview"></div>
+<script type="text/javascript">
+	var upload = mcw.upload($(btn), {
+		 action: "http://api.ktkt.com",
+        inputName:'file',
+        params:{id:2},
+        // 2. 上传前操作，预览
+        beforeUpload: function(d, e) {
+        	console.log("beforeUpload")
+        	console.log(d, e)
+        	// html 文件预览
+        	mcw.loadImage(d.obj,function(a){
+              if (a) {
+              	$("#preview").append($("<img>",{src:a.src}))
+              	console.log( a.src)
+              }
+            });
+        },
+        // 上传进度
+        onProgress: function(a,d,e,f){
+        	console.log("onProgress")
+			console.log(a,d,e,f)
+        },
+        // 
+        onSuccess:function(a,d,e){
+        	console.log("onSuccess")
+			console.log(a,d,e)
+        },
+        onComplete: function(a, d, e) {
+        	console.log("onComplete")
+        	console.log(a,d,e)
+        },
+        onCancel: function(a, c) {
+        	console.log("onCancel")
+        	console.log(a,c)
+        },
+        // 1.上传前验证，返回真则续断，否则不上传
+        onValidate: function(a, b) {
+        	console.log("onValidate")
+           console.log(a,b)
+
+           return !0;
+        },
+        onError: function(d, e, f) {
+        	console.log("onError")
+        	console.log(d,e,f)
+        }
+	})
+</script>
+
+</body>
+</html>
